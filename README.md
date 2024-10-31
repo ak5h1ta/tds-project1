@@ -6,5 +6,3 @@
 
 - **Actionable Recommendation**: You must craft a captivating bio that tells your story! A sprinkle of personality paired with your technical prowess can turn casual visitors into dedicated followers. Remember, in the vast ocean of GitHub, it's not just about the code—your unique narrative can be the beacon that attracts attention and builds your community!
 
-## Future Exploration
-As a next step, I recommend expanding the dataset to include user engagement metrics, such as contributions and pull requests, to better understand their individual impact on open-source projects.
