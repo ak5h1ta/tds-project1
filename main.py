@@ -6,7 +6,7 @@ import time
 # i used a rate limit function prior to using my access token, i've left my rate limit consideration in the code
 TOKEN = '******'  
 
-
+#USERS.CSV
 #rate limit consideration added/ before gettin my token
 def get_user_data(user_login):
     user_url = f"https://api.github.com/users/{user_login}"
@@ -27,27 +27,19 @@ def get_user_data(user_login):
 
 #my base URL for the GitHub API to search users
 base_url = "https://api.github.com/search/users?q=location:Boston+followers:>100&per_page=100"
-
 #headers for authentication
 headers = {'Authorization': f'token {TOKEN}'}
 
-
 users = []
-
 #paeination
 page = 1
-
-while True:
-   
-    url = f"{base_url}&page={page}"
-    
+while True:   
+    url = f"{base_url}&page={page}"    
     #GET request to the API
     response = requests.get(url, headers=headers)
-
     # Check success
     if response.status_code == 200:
-        data = response.json()
-        
+        data = response.json()      
         #when no more users, break the loop
         if not data['items']:
             break
@@ -75,12 +67,11 @@ while True:
                     'following': user_data.get('following', 0),
                     'created_at': user_data['created_at'],
                 })
-
                 #pause to avoid hitting API rate limits/ pre token
                 time.sleep(1)
-        
         #incrementing the page number for the next request
         page += 1
+        
     elif response.status_code == 429:  # Handle rate limit
         reset_time = int(response.headers.get("X-RateLimit-Reset"))
         wait_time = reset_time - int(time.time())  # Calculate wait time
@@ -89,7 +80,6 @@ while True:
     else:
         print(f"Error: {response.status_code}")
         break
-
 #write data to users.csv
 if users:
     with open('users.csv', mode='w', newline='', encoding='utf-8') as csv_file:
@@ -103,6 +93,8 @@ else:
     print("No users found matching the search criteria.")
 
 
+
+#SEPERATE FILE WAS MADE, but i added it to this for convenience
 #REPOSITORIES.CSV 
 #added rate limit consideration before authentication token
 def get_repositories(user_login):
